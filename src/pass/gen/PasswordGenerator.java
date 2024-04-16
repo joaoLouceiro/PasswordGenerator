@@ -1,9 +1,5 @@
 package pass.gen;
 
-import java.security.SecureRandom;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 public class PasswordGenerator {
@@ -27,16 +23,16 @@ public class PasswordGenerator {
 
 		do {
 			System.out.println("Set the length of your password (8-32):");
-			// Verify that the input is of type INT;
 			while (!sc.hasNextInt()) {
 				System.out.println("Set the length of your password (8-32):");
 				sc.next();
 			}
 			length = sc.nextInt();
-			// Verify that input is within expected range;
 		} while (length < 8 || length > 32);
 
 		pass.setLength(length);
+		
+		System.out.println(pass.generatePassword());
 
 		sc.close();
 	}
