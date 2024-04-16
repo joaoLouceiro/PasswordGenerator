@@ -1,4 +1,4 @@
-package pass.gen;
+package main;
 
 import java.util.Scanner;
 
