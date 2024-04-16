@@ -3,23 +3,26 @@ package pass.gen;
 import java.util.Scanner;
 
 public class PasswordGenerator {
-
-	public static void main(String[] args) {
-		PasswordGenerator generator = new PasswordGenerator();
-		Password pass = new Password();
-		Scanner sc = new Scanner(System.in);
-		int length = 0;
-
+	
+	private Scanner sc;
+	
+	public PasswordGenerator(Scanner sc) {
+		super();
+		this.sc = sc;
+	}
+	
+	public void mainLoop() {
+		Password password = new Password();
 		do {
-			pass.setbUpCase(
-					generator.askCharacters("Upper case letters? (y/n)", sc));
-			pass.setbLowCase(
-					generator.askCharacters("Lower case letters? (y/n)", sc));
-			pass.setbNumbers(generator.askCharacters("Numbers? (y/n)", sc));
-			pass.setbSymbols(generator.askCharacters("Symbols? (y/n)", sc));
-			if (!pass.isCharSelected())
+			password.setbUpCase(
+					this.askCharacters("Upper case letters? (y/n)", sc));
+			password.setbLowCase(
+					this.askCharacters("Lower case letters? (y/n)", sc));
+			password.setbNumbers(this.askCharacters("Numbers? (y/n)", sc));
+			password.setbSymbols(this.askCharacters("Symbols? (y/n)", sc));
+			if (!password.isCharSelected())
 				System.out.println("Select one of the previous options");
-		} while (!pass.isCharSelected());
+		} while (!password.isCharSelected());
 
 		do {
 			System.out.println("Set the length of your password (8-32):");
@@ -27,16 +30,13 @@ public class PasswordGenerator {
 				System.out.println("Set the length of your password (8-32):");
 				sc.next();
 			}
-			length = sc.nextInt();
-		} while (length < 8 || length > 32);
+			password.setLength(sc.nextInt());
+		} while (password.getLength() < 8 || password.getLength() > 32);
 
-		pass.setLength(length);
-		
-		System.out.println(pass.generatePassword());
-
-		sc.close();
+		System.out.println(password.generatePassword());
 	}
-
+	
+	
 	private boolean askCharacters(String message, Scanner sc) {
 		char reply;
 		do {

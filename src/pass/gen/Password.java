@@ -55,6 +55,10 @@ public class Password {
 		this.length = length;
 	}
 
+	public int getLength() {
+		return length;
+	}
+
 	public boolean isCharSelected() {
 		return this.bLowCase || this.bNumbers || this.bSymbols || this.bUpCase;
 	}
