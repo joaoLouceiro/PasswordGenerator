@@ -1,10 +1,16 @@
 package main;
 
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class PasswordGenerator {
 	
 	private Scanner sc;
+	private int[] rUpCase = { 65, 90 }, rLowCase = { 97, 122 },
+			rNumbers = { 48, 57 }, rSymbols = { 33, 47 };
+
 	
 	public PasswordGenerator(Scanner sc) {
 		super();
@@ -33,7 +39,28 @@ public class PasswordGenerator {
 			password.setLength(sc.nextInt());
 		} while (password.getLength() < 8 || password.getLength() > 32);
 
-		System.out.println(password.generatePassword());
+		System.out.println(this.generatePassword(password));
+	}
+	
+	private String generatePassword(Password password) {
+		String out = "";
+		List<int[]> rangeMatrix = new ArrayList<int[]>();
+		if (password.isbUpCase())
+			rangeMatrix.add(rUpCase);
+		if (password.isbLowCase())
+			rangeMatrix.add(rLowCase);
+		if (password.isbNumbers())
+			rangeMatrix.add(rNumbers);
+		if (password.isbSymbols())
+			rangeMatrix.add(rSymbols);
+		SecureRandom sr = new SecureRandom();
+		for (int i = 0; i < password.getLength(); i++) {
+			int typeRnd = sr.nextInt(0, rangeMatrix.size());
+			int lowRange = rangeMatrix.get(typeRnd)[0];
+			int upperRange = rangeMatrix.get(typeRnd)[1];
+			out += (char) sr.nextInt(lowRange, upperRange + 1);
+		}
+		return out;
 	}
 	
 	
